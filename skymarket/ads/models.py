@@ -1,18 +1,16 @@
-
-
 from django.conf import settings
 from django.db import models
-from django.utils import timezone
 
 NULLABLE = {'null': True, 'blank': True}
-NOTNULLABLE = {'null': False, 'blank': False}
+
 
 class Ad(models.Model):
-    # TODO добавьте поля модели здесь
-    title = models.CharField(max_length=100, verbose_name="название",**NULLABLE)
-    price = models.IntegerField(verbose_name="цена",**NULLABLE)
-    description = models.CharField(max_length=2000, verbose_name="описание",**NULLABLE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="ads", verbose_name="автор",**NULLABLE)
+    image = models.ImageField(upload_to="images/", verbose_name="фото", **NULLABLE)
+    title = models.CharField(max_length=100, verbose_name="название")
+    price = models.PositiveIntegerField(verbose_name="цена", **NULLABLE)
+    description = models.CharField(max_length=2000, verbose_name="описание", **NULLABLE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="ads",
+                               verbose_name="автор")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="создано")
 
     def __str__(self):
@@ -25,10 +23,10 @@ class Ad(models.Model):
 
 
 class Comment(models.Model):
-    # TODO добавьте поля модели здесь
-    text = models.CharField(max_length=2000, verbose_name="содержание",**NULLABLE)
-    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="автор",**NULLABLE)
-    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name="объявление",**NULLABLE)
+    text = models.CharField(max_length=2000, verbose_name="содержание", **NULLABLE)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name="автор",
+                               related_name="comments")
+    ad = models.ForeignKey(Ad, on_delete=models.CASCADE, verbose_name="объявление", related_name="comments")
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="создано")
 
     def __str__(self):

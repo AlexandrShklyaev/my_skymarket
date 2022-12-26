@@ -12,13 +12,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 import os
 from pathlib import Path
-
 from dotenv import load_dotenv
 
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
@@ -31,7 +29,6 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
-
 # Application definition
 
 # TODO здесь тоже нужно подключить Swagger и corsheaders
@@ -43,16 +40,13 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-"djoser",
-"drf_yasg",
-"corsheaders",
-
+    "djoser",
+    "corsheaders",
     "users",
     "ads",
     "redoc",
-    "drf_spectacular",
-]
 
+]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -92,23 +86,18 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
-    'DEFAULT_SCHEMA_CLASS':'drf_spectacular.openapi.AutoSchema'
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema'
 }
 
-SPECTACULAR_SETTINGS = {
-    'TITLE': 'Market API',
-    'DESCRIPTION':'Документация Market API',
-    'VERSION': '1.0.0'
-}
-# TODO здесь мы настраиваем Djoser
-DJOSER = {'SERIALIZERS': {
+DJOSER = {
+    'SERIALIZERS': {
         'user_create': 'users.serializers.UserRegistrationSerializer',
         'current_user': 'users.serializers.CurrentUserSerializer'
     },
     'LOGIN_FIELD': 'email',
     'PASSWORD_RESET_CONFIRM_URL': 'password/reset/confirm/{uid}/{token}',
     'EMAIL': {
-         'password_reset': 'users.email.PasswordResetEmail',
+        'password_reset': 'users.email.PasswordResetEmail',
     }
 }
 
@@ -126,8 +115,6 @@ DATABASES = {
         'PORT': '5432',
     }
 }
-
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -147,7 +134,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -158,7 +144,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/

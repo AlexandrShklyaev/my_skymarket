@@ -9,11 +9,10 @@ class UserRoles:
     # TODO закончите enum-класс для пользователя
     USER = "user"
     ADMIN = "admin"
-
-    ROLES = [
-        (USER, "Пользователь"),
-        (ADMIN, "Админ"),
-    ]
+    roles = (
+        (USER, USER),
+        (ADMIN, ADMIN),
+    )
 
 
 class User(AbstractBaseUser):
@@ -22,13 +21,13 @@ class User(AbstractBaseUser):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone', "role"]
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'phone']
 
-    first_name = models.CharField(max_length=100,null=True)
-    last_name = models.CharField(max_length=100,null=True)
-    role = models.CharField(max_length=12, choices=UserRoles.ROLES, default=UserRoles.USER)
+    first_name = models.CharField(max_length=100, null=True)
+    last_name = models.CharField(max_length=100, null=True)
+    role = models.CharField(max_length=12, choices=UserRoles.roles, default=UserRoles.USER)
     phone = PhoneNumberField()
-    email = models.EmailField("email address",unique=True)
+    email = models.EmailField("email address", unique=True)
     is_active = models.BooleanField(default=True)
 
     def __str__(self):
